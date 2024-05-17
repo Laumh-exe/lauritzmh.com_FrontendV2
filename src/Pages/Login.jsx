@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 export function Login({
   login,
-  isAuthenticated,
-  setIsAuthenticated,
+  isLoggedIn,
+  setIsLoggedIn,
   APIURL,
   setError,
 }) {
@@ -19,9 +19,8 @@ export function Login({
   };
 
   function submit(event) {
-    console.log("submitting: ", username, " ", password);
     event.preventDefault();
-    login(username, password, setIsAuthenticated, APIURL, setError);
+    login(username, password, setIsLoggedIn, APIURL, setError);
   }
 
   return (

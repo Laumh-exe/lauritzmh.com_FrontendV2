@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Login } from "./Pages/Login";
-import { login , logout} from "./Authentication";
+import { login , logout, authenticate} from "./Authentication";
 import { Home } from "./Pages/Home";
 import { Cars } from "./Pages/Cars";
 import { About } from "./Pages/About";
@@ -13,31 +13,33 @@ import { getCars } from "./apiCalls";
 import { AddCar } from "./Pages/AddCar";
 
 function App() {
-  const APIURL = "http://localhost:7070/api/";
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  //const APIURL = "http://localhost:7070/api/"; //For local api testing 
+  const APIURL = "https://api.lauritzmh.com/api/";  //For deployment
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("checking for token: " + localStorage.getItem("token")  );
-    if (localStorage.getItem("token")) {
-      setIsAuthenticated(true);
-    }
+      if(authenticate()) {
+        setIsLoggedIn(true);
+      }
+
   }),
     [];
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isLoggedIn) {
       navigate("/");
     }
-  }, [isAuthenticated]);
+  }, [isLoggedIn]);
 
   return (
     <>
       <Routes>
         <Route
           element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Header logout={logout}/>
             </ProtectedRoute>
           }
@@ -54,8 +56,8 @@ function App() {
           element={
             <Login
               login={login}
-              isAuthenticated={isAuthenticated}
-              setIsAuthenticated={setIsAuthenticated}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
               APIURL={APIURL}
               setError={setError}
             />

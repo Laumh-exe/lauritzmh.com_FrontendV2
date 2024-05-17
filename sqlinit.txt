@@ -1,0 +1,9 @@
+CREATE ROLE Flattop8319 PASSWORD g93yknARb776Rm LOGIN CREATEDB;
+GRANT pg_read_all_data TO Flattop8319;
+GRANT pg_write_all_data TO Flattop8319;
+
+-- create databases
+CREATE DATABASE api_db;
+
+\connect api_db;
+GRANT ALL PRIVILEGES ON DATABASE api_db TO Flattop8319;

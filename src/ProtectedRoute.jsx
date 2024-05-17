@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function ProtectedRoute({ children, isAuthenticated }) {
+export function ProtectedRoute({ children, isLoggedIn }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!isAuthenticated) {
+    if(!isLoggedIn) {
       return navigate("/login" );
     }
-  }, [isAuthenticated]);
+  }, [isLoggedIn]);
 
   return children;
 }

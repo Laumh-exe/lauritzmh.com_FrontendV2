@@ -7,7 +7,6 @@ export function Header({logout}) {
 
   useEffect(() => {
     const role = localStorage.getItem("roles");
-    console.log(role);
     if (role) {
       setRole(role);
     }
