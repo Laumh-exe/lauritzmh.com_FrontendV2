@@ -1,9 +1,6 @@
-# React + Vite
+Visit Lauritzmh.com for the deployed website. Same version as this.
+Login as user: username: "user", password: "user"
+Login as admin: username: "admin", password: "admin"
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
+Frontend is connected to backend api connected to db with cars..
+add cars function not implemented - focus was on deployment and routing this time around, other crud functions could easily be implemented in apiCalls.js
