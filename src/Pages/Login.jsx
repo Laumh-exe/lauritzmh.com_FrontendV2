@@ -6,6 +6,7 @@ export function Login({
   setIsLoggedIn,
   APIURL,
   setError,
+  error
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -51,6 +52,7 @@ export function Login({
           Login
         </button>
       </form>
+      <h3 style={{color:"red"}}>{error==="Invalid username or password" && error}</h3>
     </div>
   );
 }

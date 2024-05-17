@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { AdminNavbar, UserNavbar } from "./Navbar";
 
-export function Header({logout}) {
+export function Header({ logout, setIsLoggedIn }) {
   const [getRole, setRole] = useState("anyone");
 
   useEffect(() => {
@@ -11,5 +11,11 @@ export function Header({logout}) {
       setRole(role);
     }
   }, []);
-  return <> {getRole === "user" && <UserNavbar logout={logout} />}{getRole === "admin" && <AdminNavbar logout={logout}/>}</>;
+  return (
+    <>
+      {" "}
+      {getRole === "user" && <UserNavbar logout={logout} setIsLoggedIn={setIsLoggedIn}/>}
+      {getRole === "admin" && <AdminNavbar logout={logout} setIsLoggedIn={setIsLoggedIn} />}
+    </>
+  );
 }

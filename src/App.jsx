@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Login } from "./Pages/Login";
-import { login , logout, authenticate} from "./Authentication";
+import { login, logout, authenticate } from "./Authentication";
 import { Home } from "./Pages/Home";
 import { Cars } from "./Pages/Cars";
 import { About } from "./Pages/About";
@@ -13,18 +13,16 @@ import { getCars } from "./apiCalls";
 import { AddCar } from "./Pages/AddCar";
 
 function App() {
-
-  //const APIURL = "http://localhost:7070/api/"; //For local api testing 
-  const APIURL = "https://api.lauritzmh.com/api/";  //For deployment
+  //const APIURL = "http://localhost:7070/api/"; //For local api testing
+  const APIURL = "https://api.lauritzmh.com/api/"; //For deployment
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-      if(authenticate()) {
-        setIsLoggedIn(true);
-      }
-
+    if (authenticate()) {
+      setIsLoggedIn(true);
+    }
   }),
     [];
 
@@ -40,16 +38,28 @@ function App() {
         <Route
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <Header logout={logout}/>
+              <Header logout={logout} setIsLoggedIn={setIsLoggedIn} />
             </ProtectedRoute>
           }
         >
           <Route path="/" element={<Home />} />
-          <Route path="/cars" element={<Cars getCars={getCars} APIURL={APIURL} setError={setError}/>} />
+          <Route
+            path="/cars"
+            element={
+              <Cars
+                getCars={getCars}
+                APIURL={APIURL}
+                setError={setError}
+                logout={logout}
+                authenticate={authenticate}
+                setIsLoggedIn={setIsLoggedIn}
+              />
+            }
+          />
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/logout" element={<Logout/>} />
-          <Route path="/addCar" element={<AddCar/>} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/addCar" element={<AddCar />} />
         </Route>
         <Route
           path="/login"
@@ -60,6 +70,7 @@ function App() {
               setIsLoggedIn={setIsLoggedIn}
               APIURL={APIURL}
               setError={setError}
+              error={error}
             />
           }
         />

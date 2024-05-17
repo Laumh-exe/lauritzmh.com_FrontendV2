@@ -67,7 +67,7 @@ export const StyledLeft = styled.div`
   padding-left: 5%;
 `;
 
-export function AdminNavbar({logout}) {
+export function AdminNavbar({logout, setIsLoggedIn}) {
   return (
     <>
     <StyledNavbar>
@@ -89,7 +89,7 @@ export function AdminNavbar({logout}) {
           </StyledLeft>
           <StyledRight>
             <li>
-              <Link to="/logout"><span onClick={logout}>Logout</span></Link>
+              <Link to="/logout"><span onClick={() => logout(setIsLoggedIn)}>Logout</span></Link>
             </li>
           </StyledRight>
         </ul>
@@ -100,7 +100,7 @@ export function AdminNavbar({logout}) {
     </>
   );
 }
-export function UserNavbar({logout}) {
+export function UserNavbar({logout, setIsLoggedIn}) {
   return (
     <>
     <StyledNavbar>
@@ -119,7 +119,7 @@ export function UserNavbar({logout}) {
           </StyledLeft>
           <StyledRight>
             <li>
-              <Link to="/logout"><span onClick={logout}>Logout</span></Link>
+              <Link to="/logout"><span onClick={() => logout(setIsLoggedIn)}>Logout</span></Link>
             </li>
           </StyledRight>
         </ul>

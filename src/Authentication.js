@@ -2,7 +2,6 @@ import { jwtDecode } from "jwt-decode";
 
 function login(password, username, setIsLoggedIn, APIURL, setError) {
   
-  authenticate();
   if (localStorage.getItem("token")) {
     localStorage.clear();
   }
@@ -12,26 +11,28 @@ function login(password, username, setIsLoggedIn, APIURL, setError) {
     body: JSON.stringify(tempUser),
     headers: { "Content-Type": "application/json" },
   })
-    .then((response) => response.json())
-    .then((user) => {
-      // localStorage.setItem("token", user.token);
-      // localStorage.setItem("roles", user.role);
-      // localStorage.setItem("username", user.userName);
-      const decoded = jwtDecode(user.token);
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("exp", decoded.exp);
-      const role = decoded.roles.replace(/,/g, "");
-      localStorage.setItem("roles", role);
-      localStorage.setItem("userName", decoded.username);
-      setIsLoggedIn(true);
-    })
-    .catch((error) => {
-      console.log(error);
-      setError("Invalid username or password");
-    });
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('HTTP status ' + response.status);
+    }
+    return response.json();
+  })
+  .then((user) => {
+    const decoded = jwtDecode(user.token);
+    localStorage.setItem("token", user.token);
+    localStorage.setItem("exp", decoded.exp);
+    const role = decoded.roles.replace(/,/g, "");
+    localStorage.setItem("roles", role);
+    localStorage.setItem("userName", decoded.username);
+    setIsLoggedIn(true);
+  })
+  .catch((error) => {
+    setError("Invalid username or password");
+    console.error("Error:", error);
+  });
 }
 
-function logout() {
+function logout(setIsLoggedIn) {  
   localStorage.removeItem("token");
   localStorage.clear();
   setIsLoggedIn(false);

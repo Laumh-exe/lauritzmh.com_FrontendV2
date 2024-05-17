@@ -29,11 +29,11 @@ margin: 0 auto;
   }
 `;
 
-export function Cars({ getCars, APIURL, setError }) {
+export function Cars({ getCars, APIURL, setError, logout, authenticate, setIsLoggedIn}) {
   const [cars, setCars] = useState(null);
 
   useEffect(() => {
-    getCars(APIURL, setCars, setError);
+    getCars(APIURL, setCars, setError, authenticate, logout, setIsLoggedIn);
   }, [getCars, APIURL, setError]);
 
   return (
